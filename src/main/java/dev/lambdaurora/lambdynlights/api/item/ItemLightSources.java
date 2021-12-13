@@ -31,7 +31,6 @@ import java.util.List;
  * @since 1.3.0
  */
 public final class ItemLightSources {
-	private static final JsonParser JSON_PARSER = new JsonParser();
 	private static final List<ItemLightSource> ITEM_LIGHT_SOURCES = new ArrayList<>();
 	private static final List<ItemLightSource> STATIC_ITEM_LIGHT_SOURCES = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public final class ItemLightSources {
 		var id = new Identifier(resourceId.getNamespace(), resourceId.getPath().replace(".json", ""));
 		try {
 			var stream = resourceManager.getResource(resourceId).getInputStream();
-			var json = JSON_PARSER.parse(new InputStreamReader(stream)).getAsJsonObject();
+			var json = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
 			ItemLightSource.fromJson(id, json).ifPresent(data -> {
 				if (!STATIC_ITEM_LIGHT_SOURCES.contains(data))
